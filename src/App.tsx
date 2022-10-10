@@ -5,7 +5,8 @@ function App() {
 
   return (
     <div className='App'>
-      <label htmlFor='input' aria-label='input'>
+      <label htmlFor='input' aria-label='input' className='text-red-600'>
+        <span className='font-semibold'>Input</span>
         <input
           id='input'
           type='text'
