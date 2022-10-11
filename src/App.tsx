@@ -1,19 +1,35 @@
-import React, { useState } from 'react';
+import clsx from 'clsx';
+import React from 'react';
+import { BsSpotify } from 'react-icons/bs';
+
+const formatText = (..._arg: string[]) => {
+  const result = _arg.map((element) => element.trim());
+  return result;
+};
 
 function App() {
-  const [count, setCount] = useState(0);
-
   return (
     <div className='App'>
-      <label htmlFor='input' aria-label='input' className='text-red-600'>
-        <span className='font-semibold'>Input</span>
-        <input
-          id='input'
-          type='text'
-          onChange={(e) => setCount(+e.target.value)}
-          value={count}
-        />
-      </label>
+      <div
+        className={clsx(
+          formatText(
+            'container',
+            'min-h-screen',
+            'mx-auto px-10',
+            'flex',
+            'justify-center',
+            'items-center',
+          ),
+        )}
+      >
+        <button
+          type='button'
+          className={clsx('btn', 'flex', 'gap-2', 'text-lg')}
+        >
+          <BsSpotify className='text-brand' size={24} />
+          <span>Login</span>
+        </button>
+      </div>
     </div>
   );
 }
