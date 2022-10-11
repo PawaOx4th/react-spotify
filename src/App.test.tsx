@@ -15,4 +15,10 @@ describe('App.tsx', () => {
     userEvent.click(ele);
     expect(ele).toHaveAttribute('href', SPOTIFY_AUTHENTICATE);
   });
+
+  it('should render icon spotify', () => {
+    render(<App />);
+    screen.debug();
+    screen.getByTitle('icon-spotify');
+  });
 });

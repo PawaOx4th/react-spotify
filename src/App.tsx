@@ -58,7 +58,7 @@ function App() {
           href={SPOTIFY_AUTHENTICATE}
           className={clsx('btn', 'flex', 'gap-2', 'text-lg')}
         >
-          <BsSpotify className='text-brand' size={24} />
+          <BsSpotify title='icon-spotify' className='text-brand' size={24} />
           <span>Login</span>
         </a>
       </div>
