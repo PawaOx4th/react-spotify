@@ -2,17 +2,12 @@ import axios from 'axios';
 import clsx from 'clsx';
 import React, { useEffect, useState } from 'react';
 import { BsSpotify } from 'react-icons/bs';
+import LoginButton from './components/LoginButton';
 
 const formatText = (..._arg: string[]) => {
   const result = _arg.map((element) => element.trim());
   return result;
 };
-
-export const SPOTIFY_AUTHENTICATE = `${
-  import.meta.env.VITE_SPOTIFY_AUTHENTICATE_URL
-}?client_id=${import.meta.env.VITE_CLIENT_ID}&redirect_uri=${
-  import.meta.env.VITE_REDIRECT_URI
-}&response_type=${import.meta.env.VITE_RESPONSE_TYPE}`;
 
 function App() {
   const [token, setToken] = useState<string | null>(null);
@@ -34,6 +29,10 @@ function App() {
       !mounted && setToken(isToken);
     }
 
+    if (isToken) {
+      setToken(isToken);
+    }
+
     return () => {
       mounted = true;
     };
@@ -53,14 +52,7 @@ function App() {
           ),
         )}
       >
-        <a
-          role='button'
-          href={SPOTIFY_AUTHENTICATE}
-          className={clsx('btn', 'flex', 'gap-2', 'text-lg')}
-        >
-          <BsSpotify title='icon-spotify' className='text-brand' size={24} />
-          <span>Login</span>
-        </a>
+        {!token && <LoginButton />}
       </div>
     </div>
   );
