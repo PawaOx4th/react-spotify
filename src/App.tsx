@@ -1,7 +1,6 @@
-import axios from 'axios';
 import clsx from 'clsx';
+import dayjs from 'dayjs';
 import React, { useEffect, useState } from 'react';
-import { BsSpotify } from 'react-icons/bs';
 import LoginButton from './components/LoginButton';
 
 const formatText = (..._arg: string[]) => {
@@ -11,26 +10,63 @@ const formatText = (..._arg: string[]) => {
 
 function App() {
   const [token, setToken] = useState<string | null>(null);
+
+  const [isLogin, setIsLogin] = useState(true);
+
   useEffect(() => {
     let mounted = false;
-    const { hash } = window.location;
-    let isToken = localStorage.getItem('token');
-    if (hash && !isToken) {
-      isToken =
-        hash
-          .substring(1)
-          .split('&')
-          .find((word) => word.startsWith('access_token'))
-          ?.split('=')[1] ?? null;
+    const tokenExpire = localStorage.getItem('token_expire');
 
-      if (!isToken) return;
+    /**
+     *
+     * If check token expires in local.
+     */
+    if (tokenExpire) {
+      const expiresIn = dayjs()
+        .add(+tokenExpire, 'second')
+        .unix();
 
-      localStorage.setItem('token', isToken);
-      !mounted && setToken(isToken);
-    }
+      const isExpired = dayjs.unix(expiresIn).diff(dayjs()) < 1;
+      if (isExpired && !mounted) {
+        setIsLogin(false);
+        return;
+      }
 
-    if (isToken) {
-      setToken(isToken);
+      /**
+       *
+       * check hash and manage token.
+       */
+      const { hash } = window.location;
+      let hasToken = localStorage.getItem('token');
+      if (hash && !hasToken) {
+        hasToken =
+          hash
+            .substring(1)
+            .split('&')
+            .find((word) => word.startsWith('access_token'))
+            ?.split('=')[1] ?? null;
+        const expiresSecond =
+          hash
+            .substring(1)
+            .split('&')
+            .find((word) => word.startsWith('expires_in'))
+            ?.split('=')[1] ?? 0;
+
+        if (!hasToken) return;
+
+        const isExpireIn = dayjs()
+          .add(+expiresSecond, 'second')
+          .unix();
+        localStorage.setItem('token', hasToken);
+        localStorage.setItem('token_expire', `${isExpireIn}`);
+        !mounted && setToken(hasToken);
+      }
+
+      if (hasToken) {
+        !mounted && setToken(hasToken);
+      }
+    } else {
+      !mounted && setIsLogin(false);
     }
 
     return () => {
@@ -52,7 +88,8 @@ function App() {
           ),
         )}
       >
-        {!token && <LoginButton />}
+        {!isLogin && <LoginButton />}
+        {token?.substring(0, 1)}
       </div>
     </div>
   );
