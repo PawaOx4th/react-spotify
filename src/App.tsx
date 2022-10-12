@@ -1,6 +1,5 @@
 import clsx from 'clsx';
-import dayjs from 'dayjs';
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import LoginButton from './components/LoginButton';
 import useAuth from './hooks/useAuth';
 
