@@ -89,7 +89,6 @@ function App() {
         )}
       >
         {!isLogin && <LoginButton />}
-        {token?.substring(0, 1)}
       </div>
     </div>
   );
