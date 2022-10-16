@@ -6,6 +6,7 @@ interface ImportMetaEnv {
   readonly VITE_CLIENT_ID: string;
   readonly VITE_REDIRECT_URI: string;
   readonly VITE_RESPONSE_TYPE: string;
+  readonly VITE_SPOTIFY_BASE_URL: string;
   // more env variables...
 }
 
