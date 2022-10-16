@@ -1,8 +1,10 @@
 import clsx from 'clsx';
 import React from 'react';
+
 import LoginButton from './components/LoginButton';
 import http from './config/axiosGlobalConfig';
 import useAuth from './hooks/useAuth';
+
 // import ReactLogog from "./assets/react.svg"
 
 const formatText = (..._arg: string[]) => {
