@@ -1,17 +1,18 @@
 import dayjs from 'dayjs';
 import { useEffect, useState } from 'react';
+import { useLocation } from 'react-router-dom';
 
 import helper from '../utils/helper';
 
 export default function useAuth() {
   const [token, setToken] = useState<string | null>(null);
-
   const [isLogin, setIsLogin] = useState(true);
 
+  const location = useLocation();
   useEffect(() => {
-    const { hash } = window.location;
     let mounted = false;
-    const tokenExpire = localStorage.getItem('token_expire');
+
+    const { hash } = location;
     const hasTokenURL =
       hash
         .substring(1)
@@ -23,6 +24,7 @@ export default function useAuth() {
      *
      * If check token expires in local.
      */
+    const tokenExpire = localStorage.getItem('token_expire');
     if (tokenExpire) {
       const isExpired =
         dayjs.unix(+tokenExpire / 1000).diff(dayjs().unix()) < 1;
@@ -36,7 +38,6 @@ export default function useAuth() {
        *
        * check hash and manage token.
        */
-
       const hasToken = localStorage.getItem('token');
       if (hash && !hasToken) {
         const HAS_TOKEN = helper.getHash(hash, 'access_token', null);
@@ -48,8 +49,10 @@ export default function useAuth() {
         const isExpireIn = dayjs()
           .add(+expiresSecond, 'second')
           .unix();
-        localStorage.setItem('token', `${HAS_TOKEN}`);
-        localStorage.setItem('token_expire', `${isExpireIn}`);
+        if (location.pathname === '/authenticate') {
+          localStorage.setItem('token', `${HAS_TOKEN}`);
+          localStorage.setItem('token_expire', `${isExpireIn}`);
+        }
         !mounted && setToken(hasToken);
       }
 
@@ -87,7 +90,7 @@ export default function useAuth() {
     return () => {
       mounted = true;
     };
-  }, []);
+  }, [location]);
 
   return {
     token,

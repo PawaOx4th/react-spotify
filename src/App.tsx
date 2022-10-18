@@ -2,7 +2,7 @@ import clsx from 'clsx';
 import React from 'react';
 import { RouterProvider } from 'react-router-dom';
 
-import router from './config/routerConfig';
+import route from './config/routerConfig';
 
 const formatText = (..._arg: string[]) => {
   const result = _arg.map((element) => element.trim());
@@ -24,7 +24,7 @@ function App() {
           ),
         )}
       >
-        <RouterProvider router={router} />
+        <RouterProvider router={route} />
       </div>
     </div>
   );
