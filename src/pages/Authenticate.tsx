@@ -9,7 +9,7 @@ function Authenticate() {
     <div>
       Authenticate
       <div>
-        <div>{!isLogin ? <LoginButton /> : <div>Login success.</div>}</div>
+        {/* <div>{!isLogin ? <LoginButton /> : <div>Login success.</div>}</div> */}
       </div>
     </div>
   );
