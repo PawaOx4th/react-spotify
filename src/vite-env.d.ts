@@ -7,7 +7,7 @@ interface ImportMetaEnv {
   readonly VITE_REDIRECT_URI: string;
   readonly VITE_RESPONSE_TYPE: string;
   readonly VITE_SPOTIFY_BASE_URL: string;
-  readonly VITE_AZURE_APP_INSIGN: string;
+  readonly VITE_AZURE_APP_INSIGNE: string;
   // more env variables...
 }
 
